@@ -20,6 +20,7 @@ pipeline {
             post {
                 always {
                     junit '**/maven-unit-test/target/surefire-reports/*.xml'
+		    emailext attachmentsPattern: '**/maven-unit-test/target/surefire-reports/*.xml', body: 'Junit mvn test results', subject: 'Junit mvn test results', to: 'shakti.aws.dev@gmail.com'
                 }
             }
         }
