@@ -12,6 +12,7 @@ pipeline {
                   echo 'Checkout Repo'
                   git branch: "${params.BRANCH}", url: "${GIT_URL}"
               }
+			  }
         stage('Test') {
             steps {
                 sh 'mvn -f maven-unit-test/pom.xml test'
