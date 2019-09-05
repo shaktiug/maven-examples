@@ -1,0 +1,27 @@
+pipeline {
+    agent any
+	environment {
+        GIT_URL="https://github.com/shaktiug/maven-examples.git"
+    }
+	parameters {
+        string(defaultValue: "master", description: 'Branch Specifier', name: 'BRANCH')
+          }
+    stages {
+	    stage('Checkout') {
+              steps {
+                  echo 'Checkout Repo'
+                  git branch: "${params.BRANCH}", url: "${GIT_URL}"
+              }
+        stage('Test') {
+            steps {
+                sh 'mvn -f maven-unit-test/pom.xml test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        
+    }
+}
